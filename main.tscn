@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://3xxqhj7g8k7n"]
+
+[ext_resource type="Script" uid="uid://f6au6k5opc78" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://qcy67uwyo2q1" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://f3xj3ebrhk6m" path="res://mob.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dc5u4573jiapk" path="res://car.tscn" id="3_1bvp3"]
+
+[sub_resource type="Curve2D" id="Curve2D_ig7tw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1352, 117, 0, 0, 0, 0, 1352, 589)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_0xm2m"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1612, 198, 0, 0, 0, 0, 1608, 490)
+}
+point_count = 2
+
+[sub_resource type="TileSet" id="TileSet_1bvp3"]
+
+[node name="Main" type="Node" unique_id=1874540135]
+script = ExtResource("1_h2yge")
+mob_scene = ExtResource("2_1bvp3")
+car_scene = ExtResource("3_1bvp3")
+
+[node name="MobTimer" type="Timer" parent="." unique_id=1696023578]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="." unique_id=1954033706]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="." unique_id=1565342757]
+position = Vector2(200, 540)
+
+[node name="CarTimer" type="Timer" parent="." unique_id=1081638119]
+wait_time = 10.0
+
+[node name="Player" parent="." unique_id=1196284986 instance=ExtResource("1_ig7tw")]
+
+[node name="MobPath" type="Path2D" parent="." unique_id=536742295]
+curve = SubResource("Curve2D_ig7tw")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath" unique_id=431053996]
+position = Vector2(1352, 117)
+rotation = 1.5707964
+
+[node name="CarPath" type="Path2D" parent="." unique_id=1448547378]
+curve = SubResource("Curve2D_0xm2m")
+
+[node name="CarSpawnLocation" type="PathFollow2D" parent="CarPath" unique_id=859803518]
+position = Vector2(1612, 198)
+rotation = 1.5844941
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=608167711]
+tile_set = SubResource("TileSet_1bvp3")
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="CarTimer" to="." method="_on_car_timer_timeout"]

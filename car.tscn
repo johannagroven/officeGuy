@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dc5u4573jiapk"]
+
+[ext_resource type="Texture2D" uid="uid://dytvjupviymd3" path="res://graphics/car.png" id="1_7822p"]
+[ext_resource type="Script" uid="uid://binrgg17x2c5f" path="res://car.gd" id="1_uoj53"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoj53"]
+size = Vector2(461.5, 199.5)
+
+[node name="car" type="RigidBody2D" unique_id=804427759]
+collision_mask = 0
+script = ExtResource("1_uoj53")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1205149504]
+texture = ExtResource("1_7822p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1085228264]
+position = Vector2(0.25, 51.75)
+shape = SubResource("RectangleShape2D_uoj53")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2037066634]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
